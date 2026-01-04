@@ -12,14 +12,15 @@ import {
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { usePathname } from 'next/navigation'
 
 const navigation = [
-    { name: 'Home', href: '#', icon: HomeIcon, current: true },
-    { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-    { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
+    { name: 'Home', href: '/dashboard/home', icon: HomeIcon, current: true },
+    { name: 'Vender', href: '/dashboard/sell', icon: UsersIcon, current: false },
+    { name: 'Kardex', href: '/dashboard/kardex', icon: FolderIcon, current: false },
+    // { name: 'R', href: '#', icon: CalendarIcon, current: false },
+    // { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
+    { name: 'Reportes', href: '/dashboard/reports', icon: ChartPieIcon, current: false },
 ]
 const userNavigation = [
     { name: 'Your profile', href: '#' },
@@ -37,7 +38,9 @@ function classNames(...classes: string[]) {
 }
 
 const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
-    const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const path = usePathname();
+    console.log(path);
     return (
         <div>
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
@@ -201,14 +204,14 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                             </li>
                             <li className="-mx-6 mt-auto">
                                 <Menu as="div" className="relative">
-                                    <MenuButton className="relative flex w-full justify-center gap-4 items-center rounded-t-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 bg-amber-400 hover:bg-amber-500 transition-colors">
+                                    <MenuButton className="relative flex w-full justify-center gap-4 items-center rounded-t-2xl bg-amber-400 hover:bg-amber-500 transition-colors">
                                         {/* <span className="absolute -inset-1.5" /> */}
                                         <img
                                             alt=""
                                             src={'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'}
                                             className="size-8 rounded-full outline -outline-offset-1 outline-white/10"
                                         />
-                                        <span className="text-white">Options</span>
+                                        <span className="text-white">Opciones</span>
 
                                     </MenuButton>
 
