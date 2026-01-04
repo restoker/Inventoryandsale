@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
+import { Dialog, DialogBackdrop, DialogPanel, Menu, MenuButton, MenuItem, MenuItems, TransitionChild } from '@headlessui/react'
 import {
     Bars3Icon,
     CalendarIcon,
@@ -20,6 +20,11 @@ const navigation = [
     { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
     { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
     { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
+]
+const userNavigation = [
+    { name: 'Your profile', href: '#' },
+    { name: 'Settings', href: '#' },
+    { name: 'Sign out', href: '#' },
 ]
 const teams = [
     { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
@@ -60,7 +65,7 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                             <div className="relative flex h-16 shrink-0 items-center">
                                 <img
                                     alt="Your Company"
-                                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=400"
+                                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=amber&shade=400"
                                     className="h-8 w-auto"
                                 />
                             </div>
@@ -136,7 +141,7 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                     <div className="relative flex h-16 shrink-0 items-center">
                         <img
                             alt="Your Company"
-                            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=amber&shade=500"
                             className="h-8 w-auto"
                         />
                     </div>
@@ -195,18 +200,34 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                                 </ul>
                             </li>
                             <li className="-mx-6 mt-auto">
-                                <a
-                                    href="#"
-                                    className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-white/5"
-                                >
-                                    <img
-                                        alt=""
-                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
-                                    />
-                                    <span className="sr-only">Your profile</span>
-                                    <span aria-hidden="true">Tom Cook</span>
-                                </a>
+                                <Menu as="div" className="relative">
+                                    <MenuButton className="relative flex w-full justify-center gap-4 items-center rounded-t-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 bg-amber-400 hover:bg-amber-500 transition-colors">
+                                        {/* <span className="absolute -inset-1.5" /> */}
+                                        <img
+                                            alt=""
+                                            src={'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'}
+                                            className="size-8 rounded-full outline -outline-offset-1 outline-white/10"
+                                        />
+                                        <span className="text-white">Options</span>
+
+                                    </MenuButton>
+
+                                    <MenuItems
+                                        transition
+                                        className="absolute -top-29 right-10 z-10 mt-2 w-48 origin-top-right rounded-md bg-zinc-950/5 backdrop-blur-2xl py-1 outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                                    >
+                                        {userNavigation.map((item) => (
+                                            <MenuItem key={item.name}>
+                                                <a
+                                                    href={item.href}
+                                                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                                                >
+                                                    {item.name}
+                                                </a>
+                                            </MenuItem>
+                                        ))}
+                                    </MenuItems>
+                                </Menu>
                             </li>
                         </ul>
                     </nav>
@@ -222,15 +243,36 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                     <span className="sr-only">Open sidebar</span>
                     <Bars3Icon aria-hidden="true" className="size-6" />
                 </button>
-                <div className="relative flex-1 text-sm/6 font-semibold text-white">Dashboard</div>
-                <a href="#" className="relative">
-                    <span className="sr-only">Your profile</span>
-                    <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
-                    />
-                </a>
+                <div className="relative flex-1 text-sm/6 font-semibold text-white">
+                    Dashboard
+                </div>
+                <Menu as="div" className="relative ml-3">
+                    <MenuButton className="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                            alt=""
+                            src={'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'}
+                            className="size-8 rounded-full outline -outline-offset-1 outline-white/10"
+                        />
+                    </MenuButton>
+
+                    <MenuItems
+                        transition
+                        className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                    >
+                        {userNavigation.map((item) => (
+                            <MenuItem key={item.name}>
+                                <a
+                                    href={item.href}
+                                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                                >
+                                    {item.name}
+                                </a>
+                            </MenuItem>
+                        ))}
+                    </MenuItems>
+                </Menu>
             </div>
 
             <main className="lg:pl-72">
