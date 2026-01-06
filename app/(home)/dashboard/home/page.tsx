@@ -1,3 +1,5 @@
 export default function Home() {
-    return <div className="p-4">Well come your panel</div>;
+    return (
+        <div className="bg-white">Well come your panel</div>
+    )
 }

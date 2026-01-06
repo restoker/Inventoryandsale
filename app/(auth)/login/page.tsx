@@ -1,9 +1,11 @@
 'use client';
 
-import { Card, CardFooter, Image, Button } from "@heroui/react";
+import { useViewTransition } from "@/hooks/useViewTransition";
+import Link from "next/link";
 
 
 export default function Login() {
+    const { navigateWithTransition } = useViewTransition();
     return (
         <>
             <div className="flex min-h-dvh">
@@ -97,9 +99,12 @@ export default function Login() {
                                         </div>
 
                                         <div className="text-sm/6">
-                                            <a href="#" className="font-semibold text-amber-400 hover:text-amber-300">
+                                            <button
+                                                type="button"
+                                                onClick={() => navigateWithTransition('/dashboard/home')}
+                                                className="font-semibold text-amber-400 hover:text-amber-300">
                                                 Forgot password?
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
 
@@ -169,11 +174,12 @@ export default function Login() {
                     </div>
                 </div>
                 <div className="relative hidden w-0 flex-1 lg:block">
-                    <img
+                    {/* <img
                         alt=""
                         src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
                         className="absolute inset-0 size-full object-cover"
-                    />
+                    /> */}
+                    <video className="absolute inset-0 size-full object-cover" src="https://cdn.cosmos.so/976b924d-4ab5-4647-865a-073f4a6213d8.mp4" autoPlay muted loop playsInline></video>
                 </div>
             </div>
         </>

@@ -4,15 +4,14 @@ import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, Menu, MenuButton, MenuItem, MenuItems, TransitionChild } from '@headlessui/react'
 import {
     Bars3Icon,
-    CalendarIcon,
     ChartPieIcon,
-    DocumentDuplicateIcon,
     FolderIcon,
     HomeIcon,
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
+import { useViewTransition } from '@/hooks/useViewTransition'
 
 const navigation = [
     { name: 'Home', href: '/dashboard/home', icon: HomeIcon, current: true },
@@ -39,8 +38,9 @@ function classNames(...classes: string[]) {
 
 const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const path = usePathname();
-    console.log(path);
+    const { navigateWithTransition } = useViewTransition();
+    const pathName = usePathname();
+    console.log(pathName);
     return (
         <div>
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
@@ -140,7 +140,7 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
             {/* Static sidebar for desktop */}
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                 {/* Sidebar component, swap this element with another sidebar if you like */}
-                <div className="relative flex grow flex-col gap-y-5 overflow-y-auto border-r border-white/10 bg-gray-900 px-6 before:pointer-events-none before:absolute before:inset-0 before:bg-black/10">
+                <div className="relative flex grow flex-col gap-y-5 overflow-y-auto border-r border-white/10 bg-zinc-800 px-6 before:pointer-events-none before:absolute before:inset-0 before:bg-black/10">
                     <div className="relative flex h-16 shrink-0 items-center">
                         <img
                             alt="Your Company"
@@ -154,22 +154,22 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                                 <ul role="list" className="-mx-2 space-y-1">
                                     {navigation.map((item) => (
                                         <li key={item.name}>
-                                            <a
-                                                href={item.href}
+                                            <button
+                                                onClick={() => navigateWithTransition(item.href)}
                                                 className={classNames(
-                                                    item.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                                                    pathName === item.href ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                                                 )}
                                             >
                                                 <item.icon
                                                     aria-hidden="true"
                                                     className={classNames(
-                                                        item.current ? 'text-white' : 'text-gray-500 group-hover:text-white',
+                                                        pathName === item.href ? 'text-white' : 'text-gray-500 group-hover:text-white',
                                                         'size-6 shrink-0',
                                                     )}
                                                 />
                                                 {item.name}
-                                            </a>
+                                            </button>
                                         </li>
                                     ))}
                                 </ul>
@@ -204,7 +204,7 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                             </li>
                             <li className="-mx-6 mt-auto">
                                 <Menu as="div" className="relative">
-                                    <MenuButton className="relative flex w-full justify-center gap-4 items-center rounded-t-2xl bg-amber-400 hover:bg-amber-500 transition-colors">
+                                    <MenuButton className="relative flex w-full justify-center gap-4 items-center rounded-t-2xl bg-amber-400 hover:bg-amber-500 transition-colors outline-0">
                                         {/* <span className="absolute -inset-1.5" /> */}
                                         <img
                                             alt=""
@@ -266,12 +266,12 @@ const LayoutDashboard = ({ children }: { children: React.ReactNode }) => {
                     >
                         {userNavigation.map((item) => (
                             <MenuItem key={item.name}>
-                                <a
-                                    href={item.href}
+                                <button
+                                    onClick={() => navigateWithTransition(item.href)}
                                     className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
                                 >
                                     {item.name}
-                                </a>
+                                </button>
                             </MenuItem>
                         ))}
                     </MenuItems>
